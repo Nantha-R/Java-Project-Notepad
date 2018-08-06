@@ -12,6 +12,8 @@ public class Contents extends Actions{
     {
         TextArea textArea = new TextArea();
         textArea.setWrapText(true);
+        textArea.setPrefColumnCount(400);
+        textArea.setPrefRowCount(400);
 
         VBox verticalBox = new VBox();
         verticalBox.setPadding(new Insets(20,20,20,20));
