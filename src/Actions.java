@@ -120,7 +120,8 @@ public class Actions{
             try
             {
                 String fileContents = contents.getTextArea();
-                writeFile(file,fileContents);
+                if (!fileContents.equals(contents.getCurrentFileContents()))
+                    writeFile(file,fileContents);
             }
             catch(Exception e)
             {
@@ -139,8 +140,6 @@ public class Actions{
         File file = fileChooser.showSaveDialog(contents.getWindow());
         if(file != null)
         {
-            String fileContents = contents.getTextArea();
-            writeFile(file, fileContents);
             contents.setTitle(file.getName());
             contents.setCurrentFile(file);
             contents.setCurrentFileContents(contents.getTextArea());
