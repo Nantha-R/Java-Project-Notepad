@@ -22,6 +22,10 @@ public class Contents{
         this.window = window;
     }
 
+    public String getTextArea() {
+        return textArea.getText();
+    }
+
     public void setTextArea(String text) {
         this.textArea.setText(text);
     }

@@ -1,17 +1,20 @@
 import javafx.stage.FileChooser;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class Actions{
 
-    Contents contents;
+    public Contents contents;
+    public FileChooser fileChooser;
+
     Actions() {}
 
     Actions(Contents content)
     {
         contents = content;
+        setFileChooser();
     }
 
     public void createNewFile()
@@ -24,14 +27,16 @@ public class Actions{
             contents.setTitle("Untitled - Notepad");
         }
     }
+    public void setFileChooser()
+    {
+        fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("TEXT FILES", "*.txt","*.java");
+        fileChooser.getExtensionFilters().add(filter);
+    }
 
     public void openFile()
     {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Text Files","*.java","*.txt");
-        fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(contents.getWindow());
-
         if(file != null)
         {
             try
@@ -53,14 +58,53 @@ public class Actions{
         }
     }
 
+    public void writeFile(File file,String fileContents)
+    {
+        try
+        {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(fileContents);
+            fileWriter.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
     public void saveFile()
     {
-
+        File file = contents.getCurrentFile();
+        if(file != null)
+        {
+            try
+            {
+                String fileContents = contents.getTextArea();
+                writeFile(file,fileContents);
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                System.exit(1);
+            }
+        }
+        else
+        {
+            saveAsFile();
+        }
     }
 
     public void saveAsFile()
     {
-
+        File file = fileChooser.showSaveDialog(contents.getWindow());
+        if(file != null)
+        {
+            String fileContents = contents.getTextArea();
+            writeFile(file, fileContents);
+            contents.setTitle(file.getName());
+            contents.setCurrentFile(file);
+        }
     }
 
     public void print()
