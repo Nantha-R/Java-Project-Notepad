@@ -1,8 +1,6 @@
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 
 public class Actions{
 
@@ -32,14 +30,34 @@ public class Actions{
         contents.setCurrentFileContents(text);
     }
 
+    public void saveUnsavedWork()
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"DO U WANT TO SAVE YOUR WORK");
+        alert.setTitle("SAVE");
+        alert.showAndWait().ifPresent(response->{
+            if(response == ButtonType.OK)
+                saveAsFile();
+        });
+    }
+
     public void createNewFile()
     {
         File currentFile = contents.getCurrentFile();
-        if(currentFile != null)
+        if(currentFile == null)
         {
-            setContents("","Untitled - Notepad",null);
+            if (contents.getTextArea() != null && !contents.getTextArea().isEmpty())
+            {
+                saveUnsavedWork();
+            }
         }
-
+        else
+        {
+            if(! contents.getTextArea().equals(contents.getCurrentFileContents()))
+            {
+                saveUnsavedWork();
+            }
+        }
+        setContents("","Untitled - Notepad",null);
     }
 
     public void openFile()
