@@ -17,21 +17,29 @@ public class Actions{
         setFileChooser();
     }
 
-    public void createNewFile()
-    {
-        File currentFile = contents.getCurrentFile();
-        if(currentFile != null)
-        {
-            contents.setCurrentFile(null);
-            contents.setTextArea("");
-            contents.setTitle("Untitled - Notepad");
-        }
-    }
     public void setFileChooser()
     {
         fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("TEXT FILES", "*.txt","*.java");
         fileChooser.getExtensionFilters().add(filter);
+    }
+
+    public void setContents(String text,String title,File file)
+    {
+        contents.setTextArea(text);
+        contents.setTitle(title);
+        contents.setCurrentFile(file);
+        contents.setCurrentFileContents(text);
+    }
+
+    public void createNewFile()
+    {
+        File currentFile = contents.getCurrentFile();
+        if(currentFile != null)
+        {
+            setContents("","Untitled - Notepad",null);
+        }
+
     }
 
     public void openFile()
@@ -46,9 +54,7 @@ public class Actions{
                 String text;
                 while((text = bufferedReader.readLine()) != null)
                     fileContents.append(text);
-                contents.setTextArea(fileContents.toString());
-                contents.setCurrentFile(file);
-                contents.setTitle(file.getName());
+                setContents(fileContents.toString(),file.getName(),file);
             }
             catch(Exception exception)
             {
@@ -65,6 +71,7 @@ public class Actions{
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(fileContents);
             fileWriter.close();
+            contents.setCurrentFileContents(fileContents);
         }
         catch (Exception e)
         {
@@ -104,6 +111,7 @@ public class Actions{
             writeFile(file, fileContents);
             contents.setTitle(file.getName());
             contents.setCurrentFile(file);
+            contents.setCurrentFileContents(contents.getTextArea());
         }
     }
 

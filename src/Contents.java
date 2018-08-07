@@ -14,6 +14,7 @@ public class Contents{
     private Stage window;
     public Actions actions;
     private File currentFile;
+    private String currentFileContents;
 
     public Contents(){};
 
@@ -30,17 +31,25 @@ public class Contents{
         this.textArea.setText(text);
     }
 
-    public void setTitle(String title)
-    {
-        this.window.setTitle(title);
-    }
-
     public File getCurrentFile() {
         return currentFile;
     }
 
     public void setCurrentFile(File currentFile) {
         this.currentFile = currentFile;
+    }
+
+    public String getCurrentFileContents() {
+        return currentFileContents;
+    }
+
+    public void setCurrentFileContents(String fileContents) {
+        this.currentFileContents = fileContents;
+    }
+
+    public void setTitle(String title)
+    {
+        this.window.setTitle(title);
     }
 
     public Stage getWindow() {
@@ -123,7 +132,7 @@ public class Contents{
         saveAs = new MenuItem("Saveas");
         pageSetup = new MenuItem("Page setup");
         print = new MenuItem("Print");
-        exit = new MenuItem("Edit");
+        exit = new MenuItem("Exit");
         copy = new MenuItem("Copy");
         paste = new MenuItem("Paste");
         selectAll = new MenuItem("Select all");
