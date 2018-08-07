@@ -30,38 +30,52 @@ public class Actions{
         contents.setCurrentFileContents(text);
     }
 
-    public void saveUnsavedWork()
+    public void sleepSomeTime()
+    {
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch (Exception e) {}
+    }
+    public void savePromptAlert()
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"DO U WANT TO SAVE YOUR WORK");
         alert.setTitle("SAVE");
         alert.showAndWait().ifPresent(response->{
             if(response == ButtonType.OK)
                 saveAsFile();
+                sleepSomeTime();
         });
     }
-
-    public void createNewFile()
+    public void saveUnsavedWork()
     {
         File currentFile = contents.getCurrentFile();
         if(currentFile == null)
         {
             if (contents.getTextArea() != null && !contents.getTextArea().isEmpty())
             {
-                saveUnsavedWork();
+                savePromptAlert();
             }
         }
         else
         {
             if(! contents.getTextArea().equals(contents.getCurrentFileContents()))
             {
-                saveUnsavedWork();
+                savePromptAlert();
             }
         }
+    }
+
+    public void createNewFile()
+    {
+        saveUnsavedWork();
         setContents("","Untitled - Notepad",null);
     }
 
     public void openFile()
     {
+        saveUnsavedWork();
         File file = fileChooser.showOpenDialog(contents.getWindow());
         if(file != null)
         {
