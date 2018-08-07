@@ -1,26 +1,20 @@
 import javafx.application.Application;
-import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class Main extends Application{
-    private Stage window;
-    private MenuBar menuBar;
 
-    public void initializeGUI()
+    public void initializeGUI(Stage window)
     {
-        Contents contents = new Contents();
+        Contents contents = new Contents(window);
         contents.initializeMenuItems();
         contents.initializeEvents();
-        menuBar = contents.initializeMenuBars();
-        window.setTitle("Notepad");
-        window.setScene(contents.initializeScene());
+        contents.initializeMenuBars();
+        contents.initializeWindow();
     }
 
     public void start(Stage window) throws Exception
     {
-        this.window = window;
-        initializeGUI();
-        window.show();
+        initializeGUI(window);
     }
 
     public static void main(String[] args)

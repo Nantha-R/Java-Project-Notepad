@@ -2,15 +2,72 @@ import javafx.geometry.Insets;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
-public class Contents extends Actions{
+import java.io.File;
+
+public class Contents{
 
     private MenuItem newFile,open,save,saveAs,pageSetup,print,exit,copy,paste,selectAll,wordWrap,font;
     private MenuBar menuBar;
+    private TextArea textArea;
+    private Stage window;
+    public Actions actions;
+    private File currentFile;
+
+    public Contents(){};
+
+    public Contents(Stage window)
+    {
+        this.window = window;
+    }
+
+    public void setTextArea(String text) {
+        this.textArea.setText(text);
+    }
+
+    public void setTitle(String title)
+    {
+        this.window.setTitle(title);
+    }
+
+    public File getCurrentFile() {
+        return currentFile;
+    }
+
+    public void setCurrentFile(File currentFile) {
+        this.currentFile = currentFile;
+    }
+
+    public Stage getWindow() {
+        return window;
+    }
+
+    public void terminateApplication()
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"DO U WANT TO CLOSE");
+        alert.setTitle("CLOSE");
+        alert.showAndWait().ifPresent(response->{
+            if(response == ButtonType.OK)
+                window.close();
+        });
+    }
+
+    public void initializeWindow()
+    {
+        window.setTitle("Untitled - Notepad");
+        window.setScene(initializeScene());
+        window.setOnCloseRequest(e->
+        {
+            e.consume();
+            terminateApplication();
+        });
+        window.show();
+    }
 
     public Scene initializeScene()
     {
-        TextArea textArea = new TextArea();
+        textArea = new TextArea();
         textArea.setWrapText(true);
         textArea.setPrefColumnCount(400);
         textArea.setPrefRowCount(400);
@@ -24,21 +81,22 @@ public class Contents extends Actions{
 
     public void initializeEvents()
     {
-        newFile.setOnAction(e->createNewFile());
-        open.setOnAction(e->openFile());
-        save.setOnAction(e->saveFile());
-        saveAs.setOnAction(e->saveAsFile());
-        pageSetup.setOnAction(e->pageSetup());
-        print.setOnAction(e->print());
-        exit.setOnAction(e->exitFile());
-        copy.setOnAction(e->copy());
-        paste.setOnAction(e->paste());
-        selectAll.setOnAction(e->selectAll());
-        wordWrap.setOnAction(e->wordWrap());
-        font.setOnAction(e->font());
+        actions = new Actions(this);
+        newFile.setOnAction(e->actions.createNewFile());
+        open.setOnAction(e->actions.openFile());
+        save.setOnAction(e->actions.saveFile());
+        saveAs.setOnAction(e->actions.saveAsFile());
+        pageSetup.setOnAction(e->actions.pageSetup());
+        print.setOnAction(e->actions.print());
+        exit.setOnAction(e->actions.exitFile());
+        copy.setOnAction(e->actions.copy());
+        paste.setOnAction(e->actions.paste());
+        selectAll.setOnAction(e->actions.selectAll());
+        wordWrap.setOnAction(e->actions.wordWrap());
+        font.setOnAction(e->actions.font());
     }
 
-    public MenuBar initializeMenuBars()
+    public void initializeMenuBars()
     {
         Menu fileMenu,editMenu,formatMenu;
         fileMenu = new javafx.scene.control.Menu("FILE");
@@ -51,7 +109,6 @@ public class Contents extends Actions{
 
         menuBar = new MenuBar();
         menuBar.getMenus().addAll(fileMenu,editMenu,formatMenu);
-        return menuBar;
     }
 
     public void initializeMenuItems()
