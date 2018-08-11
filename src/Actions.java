@@ -151,16 +151,6 @@ public class Actions{
         }
     }
 
-    public void print()
-    {
-
-    }
-
-    public void pageSetup()
-    {
-
-    }
-
     public void exitFile()
     {
         contents.terminateApplication();

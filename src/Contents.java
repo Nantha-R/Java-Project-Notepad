@@ -7,7 +7,7 @@ import java.io.File;
 
 public class Contents{
 
-    private MenuItem newFile,open,save,saveAs,pageSetup,print,exit,copy,paste,selectAll,wordWrap,font;
+    private MenuItem newFile,open,save,saveAs,exit,copy,paste,selectAll,wordWrap,font;
     private MenuBar menuBar;
     public TextArea textArea;
     private Stage window;
@@ -99,8 +99,6 @@ public class Contents{
         open.setOnAction(e->actions.openFile());
         save.setOnAction(e->actions.saveFile());
         saveAs.setOnAction(e->actions.saveAsFile());
-        pageSetup.setOnAction(e->actions.pageSetup());
-        print.setOnAction(e->actions.print());
         exit.setOnAction(e->actions.exitFile());
         copy.setOnAction(e->actions.copy());
         paste.setOnAction(e->actions.paste());
@@ -116,7 +114,7 @@ public class Contents{
         editMenu = new javafx.scene.control.Menu("EDIT");
         formatMenu = new javafx.scene.control.Menu("FORMAT");
 
-        fileMenu.getItems().addAll(newFile,open,save,saveAs,pageSetup,print,exit);
+        fileMenu.getItems().addAll(newFile,open,save,saveAs,exit);
         editMenu.getItems().addAll(copy,paste,selectAll);
         formatMenu.getItems().addAll(wordWrap,font);
 
@@ -130,8 +128,6 @@ public class Contents{
         open = new MenuItem("Open");
         save = new MenuItem("Save");
         saveAs = new MenuItem("Saveas");
-        pageSetup = new MenuItem("Page setup");
-        print = new MenuItem("Print");
         exit = new MenuItem("Exit");
         copy = new MenuItem("Copy");
         paste = new MenuItem("Paste");
