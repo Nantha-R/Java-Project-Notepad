@@ -205,6 +205,7 @@ public class Actions{
 
     public void font()
     {
-
+        FontHandler fontHandler = new FontHandler();
+        fontHandler.display();
     }
 }
