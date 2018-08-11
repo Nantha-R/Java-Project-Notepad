@@ -1,6 +1,11 @@
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.io.*;
+import java.awt.Toolkit;
 
 public class Actions{
 
@@ -148,7 +153,7 @@ public class Actions{
 
     public void print()
     {
-        
+
     }
 
     public void pageSetup()
@@ -163,27 +168,53 @@ public class Actions{
 
     public void copy()
     {
-
+        // http://www.javapractices.com/topic/TopicAction.do?Id=82
+        String file_contents = contents.getTextArea();
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(new StringSelection(file_contents),null);
     }
 
     public void paste()
     {
+        // http://www.javapractices.com/topic/TopicAction.do?Id=82
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable clipboardContents = clipboard.getContents(null);
+        String result = "";
+        try
+        {
+            boolean hasTransferableText = (clipboardContents != null) && clipboardContents.isDataFlavorSupported(DataFlavor.stringFlavor);
+            if (hasTransferableText) {
+                result = (String) clipboardContents.getTransferData(DataFlavor.stringFlavor);
+                contents.textArea.appendText(result);
 
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            System.exit(1);
+        }
     }
 
     public void selectAll()
     {
-
+        contents.textArea.selectAll();
     }
 
     public void wordWrap()
     {
-
+        if(contents.textArea.isWrapText())
+        {
+             contents.textArea.setWrapText(false);
+        }
+        else
+        {
+            contents.textArea.setWrapText(true);
+        }
     }
 
     public void font()
     {
 
     }
-
 }

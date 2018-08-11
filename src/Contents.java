@@ -9,7 +9,7 @@ public class Contents{
 
     private MenuItem newFile,open,save,saveAs,pageSetup,print,exit,copy,paste,selectAll,wordWrap,font;
     private MenuBar menuBar;
-    private TextArea textArea;
+    public TextArea textArea;
     private Stage window;
     public Actions actions;
     private File currentFile;
@@ -81,7 +81,7 @@ public class Contents{
     public Scene initializeScene()
     {
         textArea = new TextArea();
-        textArea.setWrapText(true);
+        textArea.setWrapText(false);
         textArea.setPrefColumnCount(400);
         textArea.setPrefRowCount(400);
 
