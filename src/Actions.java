@@ -148,7 +148,7 @@ public class Actions{
 
     public void print()
     {
-
+        
     }
 
     public void pageSetup()
@@ -158,7 +158,7 @@ public class Actions{
 
     public void exitFile()
     {
-
+        contents.terminateApplication();
     }
 
     public void copy()

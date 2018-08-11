@@ -3,7 +3,6 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 import java.io.File;
 
 public class Contents{
@@ -58,6 +57,7 @@ public class Contents{
 
     public void terminateApplication()
     {
+        actions.saveUnsavedWork();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"DO U WANT TO CLOSE");
         alert.setTitle("CLOSE");
         alert.showAndWait().ifPresent(response->{
