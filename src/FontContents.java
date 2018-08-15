@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.FontPosture;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.awt.GraphicsEnvironment;
@@ -105,7 +106,12 @@ public class FontContents {
     public void initializeEvents()
     {
         preview.setOnAction(e->{
-            fontHandler.previewFont();
+            fontHandler.previewFont(previewText);
+        });
+
+        ok.setOnAction(e->{
+            fontHandler.addFont(fontHandler.actions.contents.textArea);
+            window.close();
         });
     }
 
