@@ -13,7 +13,45 @@ public class FontContents {
     private Stage window;
     private ComboBox<String> family, style, size, color;
     private Button preview, ok;
-    private Label previewText;
+    public Label previewText;
+    public FontHandler fontHandler;
+
+    public FontContents(FontHandler fontHandler)
+    {
+        this.fontHandler = fontHandler;
+    }
+
+    public Label getPreviewText() {
+        return previewText;
+    }
+
+    public String getFamily() {
+        if(family.getSelectionModel().isEmpty())
+            return "Arial";
+        else
+            return family.getValue();
+    }
+
+    public String getStyle() {
+        if(style.getSelectionModel().isEmpty())
+            return "Plain";
+        else
+            return style.getValue();
+    }
+
+    public Double getSize() {
+        if(size.getSelectionModel().isEmpty())
+            return 10.0;
+        else
+            return Double.parseDouble(size.getValue());
+    }
+
+    public String getColor() {
+        if(color.getSelectionModel().isEmpty())
+            return "black";
+        else
+            return color.getValue();
+    }
 
     public HashMap<String,String[]> getDefaultComboBoxes()
     {
@@ -64,13 +102,11 @@ public class FontContents {
         previewText.setPrefWidth(200);
     }
 
-    public void initializeWindow()
+    public void initializeEvents()
     {
-        window = new Stage();
-        window.setTitle("FORMAT MENU");
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setScene(initializeScene());
-        window.showAndWait();
+        preview.setOnAction(e->{
+            fontHandler.previewFont();
+        });
     }
 
     public Scene initializeScene()
@@ -92,4 +128,14 @@ public class FontContents {
         Scene scene = new Scene(gridPane);
         return scene;
     }
+
+    public void initializeWindow()
+    {
+        window = new Stage();
+        window.setTitle("FORMAT MENU");
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setScene(initializeScene());
+        window.showAndWait();
+    }
+
 }
